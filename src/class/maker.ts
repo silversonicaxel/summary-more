@@ -8,6 +8,7 @@ export class Maker {
   private readFileAsync: Function
   private foldersToExlcude: string[] = ['node_modules', 'dist', '.git']
   private extensionToRead = '.md'
+  private errorNoReadmeFile = 'No README.md file found to be updated'
 
   constructor() {
     this.readDirAsync = util.promisify(fs.readdir)
@@ -15,7 +16,14 @@ export class Maker {
     this.readFileAsync = util.promisify(fs.readFile)
   }
 
-  createReadmeMore(folder: string, ) {
+  async createReadmeMore(folder: string): Promise<void>  {
+    const readmeFile = await this.readReadmeFile(`${folder}/READMsE.md`)
+    if (readmeFile === '') {
+      console.error(this.errorNoReadmeFile)
+      process.exit(1)
+      return
+    }
+
     this.readFilesFromFolder(folder, this.updateReadmeFile);
   }
 

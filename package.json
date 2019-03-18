@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "readme-more is a tool that serch for all *.MD files in your project and summarize them in the README.md",
   "license": "MIT",
+  "scripts": {
+    "lint": "tslint src/**/*.ts",
+    "build": "tsc -p tsconfig.build.json"
+  },
   "author": {
     "name": "Alessandro (silversonicaxel) Rabitti",
     "url": "https://github.com/silversonicaxel"
@@ -25,5 +29,10 @@
     "readme more",
     "summary",
     "index"
-  ]
+  ],
+  "devDependencies": {
+    "ts-node": "^8.0.3",
+    "tslint": "^5.14.0",
+    "typescript": "^3.3.3333"
+  }
 }

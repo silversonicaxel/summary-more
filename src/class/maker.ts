@@ -15,6 +15,7 @@ export class Maker {
     this.readDirAsync = util.promisify(fs.readdir)
     this.statAsync = util.promisify(fs.stat)
     this.readFileAsync = util.promisify(fs.readFile)
+    this.updateReadmeFile = this.updateReadmeFile.bind(this)
   }
 
   async createReadmeMore(folder: string): Promise<void>  {

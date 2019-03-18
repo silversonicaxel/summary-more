@@ -17,7 +17,7 @@ export class Maker {
   }
 
   async createReadmeMore(folder: string): Promise<void>  {
-    const readmeFile = await this.readReadmeFile(`${folder}/READMsE.md`)
+    const readmeFile = await this.readReadmeFile(`${folder}/README.md`)
     if (readmeFile === '') {
       console.error(this.errorNoReadmeFile)
       process.exit(1)

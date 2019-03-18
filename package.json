@@ -1,0 +1,29 @@
+{
+  "name": "readme-more",
+  "version": "0.0.1",
+  "description": "readme-more is a tool that serch for all *.MD files in your project and summarize them in the README.md",
+  "license": "MIT",
+  "author": {
+    "name": "Alessandro (silversonicaxel) Rabitti",
+    "url": "https://github.com/silversonicaxel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/silversonicaxel/readme-more"
+  },
+  "homepage": "https://github.com/silversonicaxel/readme-more#readme",
+  "bugs": {
+    "url": "https://github.com/silversonicaxel/readme-more/issues"
+  },
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">= 6.0.0"
+  },
+  "keywords": [
+    "readme",
+    "documentation",
+    "readme more",
+    "summary",
+    "index"
+  ]
+}

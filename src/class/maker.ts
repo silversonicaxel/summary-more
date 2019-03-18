@@ -9,6 +9,7 @@ export class Maker {
   private foldersToExlcude: string[] = ['node_modules', 'dist', '.git']
   private extensionToRead = '.md'
   private errorNoReadmeFile = 'No README.md file found to be updated'
+  private errorNoMoreFiles = 'No more documentation files found to be updated within README.md'
 
   constructor() {
     this.readDirAsync = util.promisify(fs.readdir)
@@ -82,6 +83,12 @@ export class Maker {
   async updateReadmeFile(readError: Error, readFiles: string[]): Promise<void> {
     if (readError) {
       console.error(readError)
+      process.exit(1)
+      return
+    }
+
+    if (readFiles.length <= 0) {
+      console.error(this.errorNoMoreFiles)
       process.exit(1)
       return
     }

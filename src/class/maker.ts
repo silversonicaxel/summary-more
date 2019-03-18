@@ -58,7 +58,7 @@ export class Maker {
               }
             })
           } else {
-            if (readFile.indexOf(this.extensionToRead) >= 0) {
+            if (readFile.indexOf(this.extensionToRead) >= 0 && path.basename(readFile) !== 'README.md') {
               results.push(readFile)
             }
 

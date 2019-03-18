@@ -57,8 +57,8 @@ export class Maker {
             }
           }
         })
-    } catch (readFeatureFilesFromFolderError) {
-      onReadFilesFromFolder(readFeatureFilesFromFolderError, [])
+    } catch (readFilesFromFolderError) {
+      onReadFilesFromFolder(readFilesFromFolderError, [])
     }
   }
 
@@ -66,7 +66,7 @@ export class Maker {
     try {
       return await this.readFileAsync(file, 'utf8')
 
-    } catch (readContentFeatureFileError) {
+    } catch (readReadmeFileError) {
       return ''
     }
   }

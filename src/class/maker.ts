@@ -94,6 +94,8 @@ export class Maker {
       return
     }
 
+    readFiles = readFiles.map((readFile: string) => readFile.replace(`${process.cwd()}/`, ''))
+
     console.log(readFiles)
   }
 }

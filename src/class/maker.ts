@@ -11,6 +11,8 @@ export class Maker {
   private errorWrongFolder = 'Folder to be processed does not exist'
   private errorNoReadmeFile = 'No README.md file found to be updated'
   private errorNoMoreFiles = 'No more documentation files found to be updated within README.md'
+  private readmeFileContent = ''
+  private readmeFileSection = ''
 
   constructor() {
     this.readDirAsync = util.promisify(fs.readdir)
@@ -19,15 +21,16 @@ export class Maker {
     this.updateReadmeFile = this.updateReadmeFile.bind(this)
   }
 
-  async createReadmeMore(baseFolder: string, docsFolder: string): Promise<void>  {
-    const readmeFile = await this.readReadmeFile(`${baseFolder}/README.md`)
-    if (readmeFile === '') {
+  async createReadmeMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
+    this.readmeFileContent = await this.readReadmeFile(`${baseFolder}/README.md`)
+    if (this.readmeFileContent === '') {
       console.error(this.errorNoReadmeFile)
       process.exit(1)
       return
     }
 
-    this.readFilesFromFolder(docsFolder, this.updateReadmeFile);
+    this.readmeFileSection = section
+    this.readFilesFromFolder(docsFolder, this.updateReadmeFile)
   }
 
   async readFilesFromFolder(folder: string, onReadFilesFromFolder: Function): Promise<void> {
@@ -97,6 +100,6 @@ export class Maker {
 
     readFiles = readFiles.map((readFile: string) => readFile.replace(`${process.cwd()}/`, ''))
 
-    console.log(readFiles)
+
   }
 }

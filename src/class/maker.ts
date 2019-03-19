@@ -18,15 +18,15 @@ export class Maker {
     this.updateReadmeFile = this.updateReadmeFile.bind(this)
   }
 
-  async createReadmeMore(folder: string): Promise<void>  {
-    const readmeFile = await this.readReadmeFile(`${folder}/README.md`)
+  async createReadmeMore(baseFolder: string, docsFolder: string): Promise<void>  {
+    const readmeFile = await this.readReadmeFile(`${baseFolder}/README.md`)
     if (readmeFile === '') {
       console.error(this.errorNoReadmeFile)
       process.exit(1)
       return
     }
 
-    this.readFilesFromFolder(folder, this.updateReadmeFile);
+    this.readFilesFromFolder(docsFolder, this.updateReadmeFile);
   }
 
   async readFilesFromFolder(folder: string, onReadFilesFromFolder: Function): Promise<void> {

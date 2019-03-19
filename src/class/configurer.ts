@@ -21,6 +21,12 @@ export class Configurer {
       .option('-d, --docsFolder [docsFolder]', 'Select base folder where README.md is located')
       .option('-s, --docsSection [docsSection]', 'Select section where to list documentation in README.md')
       .parse(process.argv)
+
+    if (!program.docsSection) {
+      console.error('-s, --docsSection required')
+      process.exit(1)
+      return
+    }
   }
 
   fetchData(): ConfigurerData {

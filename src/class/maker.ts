@@ -8,6 +8,7 @@ export class Maker {
   private readFileAsync: Function
   private foldersToExlcude: string[] = ['node_modules', 'dist', '.git']
   private extensionToRead = '.md'
+  private errorWrongFolder = 'Folder to be processed does not exist'
   private errorNoReadmeFile = 'No README.md file found to be updated'
   private errorNoMoreFiles = 'No more documentation files found to be updated within README.md'
 
@@ -83,7 +84,7 @@ export class Maker {
 
   async updateReadmeFile(readError: Error, readFiles: string[]): Promise<void> {
     if (readError) {
-      console.error(readError)
+      console.error(this.errorWrongFolder)
       process.exit(1)
       return
     }

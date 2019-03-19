@@ -39,5 +39,8 @@
     "ts-node": "^8.0.3",
     "tslint": "^5.14.0",
     "typescript": "^3.3.3333"
+  },
+  "dependencies": {
+    "commander": "^2.19.0"
   }
 }

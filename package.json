@@ -11,6 +11,10 @@
     "name": "Alessandro (silversonicaxel) Rabitti",
     "url": "https://github.com/silversonicaxel"
   },
+  "main": "dist/index.js",
+  "bin": {
+    "readme-more": "dist/index.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/silversonicaxel/readme-more"

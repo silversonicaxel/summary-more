@@ -1,6 +1,5 @@
 [![Build Status](https://travis-ci.org/silversonicaxel/readme-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/readme-more)
 
-
 # readme-more
 readme-more is a tool that serch for all *.MD files in your project and summarize them in the README.md
 
@@ -8,3 +7,10 @@ readme-more is a tool that serch for all *.MD files in your project and summariz
 ## Requirements
 * node 10.0+
 * npm 6.0+
+
+
+## Example
+
+```
+$ read-more -s "requirements"
+```

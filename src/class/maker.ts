@@ -13,12 +13,17 @@ export class Maker {
   private errorNoMoreFiles = 'No more documentation files found to be updated within README.md'
   private readmeFileContent = ''
   private readmeFileSection = ''
+  private existingSectionIndex = 0;
+  private existingSectionNextIndex = 0;
 
   constructor() {
     this.readDirAsync = util.promisify(fs.readdir)
     this.statAsync = util.promisify(fs.stat)
     this.readFileAsync = util.promisify(fs.readFile)
     this.updateReadmeFile = this.updateReadmeFile.bind(this)
+    this.checkExistingSection = this.checkExistingSection.bind(this)
+    this.checkExistingNextSection = this.checkExistingNextSection.bind(this)
+    this.removeExistingSection = this.removeExistingSection.bind(this)
   }
 
   async createReadmeMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
@@ -98,8 +103,57 @@ export class Maker {
       return
     }
 
-    readFiles = readFiles.map((readFile: string) => readFile.replace(`${process.cwd()}/`, ''))
+    readFiles = readFiles.map((readFile: string) => {
+      const filePath = readFile.replace(`${process.cwd()}/`, '')
+      return `[${path.parse(filePath).name}](${filePath})`
+    })
 
+    this.handleContentReadme(this.getRowsReadmeFile(this.readmeFileContent), readFiles)
+  }
 
+  private getRowsReadmeFile(contentFile: string): string[] {
+    let rowsFile = contentFile.split('\n');
+    rowsFile = rowsFile
+      .map(row => row.trim())
+
+    return rowsFile
+  }
+
+  private checkExistingSection(line: string, index: number): boolean {
+    const regExpr = new RegExp(`^([#]+)[ ](${this.readmeFileSection})$`, 'gi')
+    if (regExpr.test(line)) {
+      this.existingSectionIndex = index + 1
+      return true
+    }
+    return false
+  }
+
+  private checkExistingNextSection(line: string, index: number): boolean {
+    const regExpr = new RegExp(/(^[#]+)/, 'gi')
+    if (regExpr.test(line) && index > this.existingSectionIndex && this.existingSectionNextIndex === 0) {
+      this.existingSectionNextIndex = index - 1
+      return true
+    }
+    return false
+  }
+
+  private removeExistingSection(line: string, index: number): boolean {
+    return index < this.existingSectionIndex || index > this.existingSectionNextIndex;
+  }
+
+  private handleContentReadme(readLines: string[], documentLines: string[]) {
+    const isExistingSection = readLines.some(this.checkExistingSection)
+    if (!isExistingSection) {
+      this.existingSectionIndex = readLines.length - 1
+      this.existingSectionNextIndex = readLines.length - 1
+      documentLines.splice(0, 0, ' ', `# ${this.readmeFileSection}`)
+    }
+
+    const isExistingNextSection = readLines.some(this.checkExistingNextSection)
+    if (!isExistingNextSection) {
+      this.existingSectionNextIndex = readLines.length - 1
+    }
+
+    readLines.splice(this.existingSectionIndex, this.existingSectionNextIndex - this.existingSectionIndex, ...documentLines);
   }
 }

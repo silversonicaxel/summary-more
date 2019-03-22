@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/silversonicaxel/readme-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/readme-more)
 
 # summary-more
-summary-more is a tool that serch for all *.md files in your project and list them in the README.md file.
+summary-more is a tool that search for all *.md files in your project and list them in the README.md file.
 What summary-more specifically does is to search in the folder (current or provided one) all the *.md files and list their links one by one inside a provided _section_ of the README.md file.
 This is a fast and automatic way to quickly link all the documents inside of a project in the main README.md and it is pretty useful for massive or big documented projects.
 

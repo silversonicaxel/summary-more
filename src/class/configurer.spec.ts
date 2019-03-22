@@ -68,52 +68,5 @@ describe('#Configurer', () => {
 
       expect(data).to.deep.equal(expectedConfigurerData)
     })
-/*
-    it('should return customized output folder', () => {
-      const outputFolder = 'html/report/features'
-      const expectedConfigurerData = <ConfigurerData>{
-        analysisFolder: '',
-        outputFolder: outputFolder,
-        theme: 'white'
-      }
-      program['analysis'] = ''
-      program['output'] = outputFolder
-
-      const data = configurer.fetchData()
-
-      expect(data).to.deep.equal(expectedConfigurerData)
-    })
-
-    it('should return customized report theme', () => {
-      const theme = 'black'
-      const expectedConfigurerData = <ConfigurerData>{
-        analysisFolder: '',
-        outputFolder: '',
-        theme: theme
-      }
-      program['analysis'] = ''
-      program['output'] = ''
-      program['theme'] = theme
-
-      const data = configurer.fetchData()
-
-      expect(data).to.deep.equal(expectedConfigurerData)
-    })
-
-    it('should return default report theme', () => {
-      const theme = 'white'
-      const expectedConfigurerData = <ConfigurerData>{
-        analysisFolder: '',
-        outputFolder: '',
-        theme: 'white'
-      }
-      program['analysis'] = ''
-      program['output'] = ''
-      program['theme'] = theme
-
-      const data = configurer.fetchData()
-
-      expect(data).to.deep.equal(expectedConfigurerData)
-    })*/
   })
 })

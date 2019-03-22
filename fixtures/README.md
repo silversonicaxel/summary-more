@@ -16,4 +16,10 @@ $ read-more -s "fixtures" -b "fixtures"
 ```
 
 ## Fixtures
-To update with my stuff
+[CITIES](fixtures/CITIES.md)
+[CAPPELLETTI](fixtures/food/CAPPELLETTI.md)
+[ERBAZZONE](fixtures/food/ERBAZZONE.md)
+[TORTELLI](fixtures/food/TORTELLI.md)
+[BOLOGNA](fixtures/maps/BOLOGNA.md)
+[MODENA](fixtures/maps/MODENA.md)
+[REGGIO-EMILIA](fixtures/maps/REGGIO-EMILIA.md)

@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "lint": "tslint src/**/*.ts",
-    "build": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "test": "_mocha --opts ./mocha.opts",
+    "test-watch": "_mocha --watch-extensions spec.ts --watch --opts ./mocha.opts"
   },
   "author": {
     "name": "Alessandro (silversonicaxel) Rabitti",

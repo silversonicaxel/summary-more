@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/silversonicaxel/readme-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/readme-more)
+[![Build Status](https://travis-ci.org/silversonicaxel/summary-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/summary-more)
 
 # summary-more
 summary-more is a tool that search for all *.md files in your project and list them in the README.md file.

@@ -42,10 +42,10 @@ describe('#Maker', () => {
       expect(maker['summaryFileFolder']).to.equal(path.resolve(baseFolder))
     })
 
-    it('should initialize section', () => {
-      sandboxSet.stub(maker, 'readSummaryFile')
+    it('should initialize section', async () => {
+      sandboxSet.stub(maker, 'readSummaryFile').returns('Some content')
       sandboxSet.stub(maker, 'readFilesFromFolder')
-      maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+      await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
 
       expect(maker['summaryFileSection']).to.equal(docsSection)
     })

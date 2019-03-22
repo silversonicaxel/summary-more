@@ -3,6 +3,7 @@
 # readme-more
 readme-more is a tool that serch for all *.md files in your project and summarize them in the README.md.
 What readme-more specifically does is to search in the folder (default or custom) all the *.md files and list their links inside a provided _section_ of the README.md file.
+This is a fast and automatic way to quickly link all the documents inside of a project in the main README.md.
 
 The outcome of this application is visible in the example [README.md](fixtures/README.md).
 

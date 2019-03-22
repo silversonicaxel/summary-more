@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/silversonicaxel/summary-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/summary-more)
-
 [![Coverage Status](https://coveralls.io/repos/github/silversonicaxel/summary-more/badge.svg?branch=master)](https://coveralls.io/github/silversonicaxel/summary-more?branch=master)
 
 # summary-more

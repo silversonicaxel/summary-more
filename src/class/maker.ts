@@ -30,7 +30,7 @@ export class Maker {
     this.removeExistingSection = this.removeExistingSection.bind(this)
   }
 
-  async createReadmeMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
+  async applyReadmeMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
     this.readmeFileFolder = path.resolve(baseFolder)
     this.readmeDocumentationFolder = path.resolve(baseFolder, docsFolder)
 
@@ -45,7 +45,7 @@ export class Maker {
     this.readFilesFromFolder(this.readmeDocumentationFolder, this.updateReadmeFile)
   }
 
-  async readFilesFromFolder(folder: string, onReadFilesFromFolder: Function): Promise<void> {
+  private async readFilesFromFolder(folder: string, onReadFilesFromFolder: Function): Promise<void> {
     let results: string[] = []
 
     try {
@@ -88,7 +88,7 @@ export class Maker {
     }
   }
 
-  async readReadmeFile(file: string): Promise<string> {
+  private async readReadmeFile(file: string): Promise<string> {
     try {
       return await this.readFileAsync(file, 'utf8')
 
@@ -97,7 +97,7 @@ export class Maker {
     }
   }
 
-  async writeReadmeFile(file: string, contentFile: string): Promise<boolean> {
+  private async writeReadmeFile(file: string, contentFile: string): Promise<boolean> {
     try {
       await this.writeFileAsync(file, contentFile, 'utf8')
       return true
@@ -107,7 +107,7 @@ export class Maker {
     }
   }
 
-  async updateReadmeFile(readError: Error, readFiles: string[]): Promise<void> {
+  private async updateReadmeFile(readError: Error, readFiles: string[]): Promise<void> {
     if (readError) {
       console.error(this.errorWrongFolder)
       process.exit(1)

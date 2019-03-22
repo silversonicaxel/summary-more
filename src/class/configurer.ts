@@ -18,7 +18,7 @@ export class Configurer {
       .version(version, '-v, --version')
       .allowUnknownOption()
       .option('-b, --baseFolder [baseFolder]', 'Select base folder where README.md is located')
-      .option('-d, --docsFolder [docsFolder]', 'Select base folder where documentation to set into README.md is located')
+      .option('-d, --docsFolder [docsFolder]', 'Select subfolder of the base folder where documentation is located')
       .option('-s, --docsSection [docsSection]', 'Select section where to list documentation in README.md')
       .parse(process.argv)
 

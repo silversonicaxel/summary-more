@@ -13,6 +13,7 @@ export class Maker {
   private errorNoReadmeFile = 'No README.md file found to be updated'
   private errorNoMoreFiles = 'No more documentation files found to be updated within README.md'
   private readmeFileFolder = ''
+  private readmeDocumentationFolder = ''
   private readmeFileContent = ''
   private readmeFileSection = ''
   private existingSectionIndex = 0
@@ -30,7 +31,9 @@ export class Maker {
   }
 
   async createReadmeMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
-    this.readmeFileFolder = baseFolder
+    this.readmeFileFolder = path.resolve(baseFolder)
+    this.readmeDocumentationFolder = path.resolve(baseFolder, docsFolder)
+
     this.readmeFileContent = await this.readReadmeFile(`${baseFolder}/README.md`)
     if (this.readmeFileContent === '') {
       console.error(this.errorNoReadmeFile)
@@ -39,7 +42,7 @@ export class Maker {
     }
 
     this.readmeFileSection = section
-    this.readFilesFromFolder(docsFolder, this.updateReadmeFile)
+    this.readFilesFromFolder(this.readmeDocumentationFolder, this.updateReadmeFile)
   }
 
   async readFilesFromFolder(folder: string, onReadFilesFromFolder: Function): Promise<void> {
@@ -118,7 +121,7 @@ export class Maker {
     }
 
     readFiles = readFiles.map((readFile: string) => {
-      const filePath = readFile.replace(`${process.cwd()}/`, '')
+      const filePath = readFile.replace(`${this.readmeFileFolder}/`, '')
       return `* [${path.parse(filePath).name}](${filePath})`
     })
 

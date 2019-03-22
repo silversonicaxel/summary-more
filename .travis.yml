@@ -5,3 +5,5 @@ script:
   - yarn lint
   - yarn test
   - yarn test-coverage
+after_success:
+  - yarn coveralls

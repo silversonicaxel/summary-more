@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/silversonicaxel/summary-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/summary-more)
 
+[![Coverage Status](https://coveralls.io/repos/github/silversonicaxel/summary-more/badge.svg?branch=master)](https://coveralls.io/github/silversonicaxel/summary-more?branch=master)
+
 # summary-more
 summary-more is a tool that search for all *.md files in your project and list them in the README.md file.
 What summary-more specifically does is to search in the folder (current or provided one) all the *.md files and list their links one by one inside a provided _section_ of the README.md file.

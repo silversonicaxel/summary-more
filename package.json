@@ -7,7 +7,7 @@
     "lint": "tslint src/**/*.ts",
     "build": "tsc -p tsconfig.build.json",
     "test": "_mocha --opts ./mocha.opts",
-    "test-watch": "_mocha --watch-extensions spec.ts --watch --opts ./mocha.opts",
+    "test-watch": "_mocha --watch-extensions ts -w --opts ./mocha.opts",
     "test-coverage": "nyc _mocha --opts ./mocha.opts",
     "coveralls": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"
   },

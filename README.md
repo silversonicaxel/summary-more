@@ -1,7 +1,10 @@
 [![Build Status](https://travis-ci.org/silversonicaxel/readme-more.svg?branch=master)](https://travis-ci.org/silversonicaxel/readme-more)
 
 # readme-more
-readme-more is a tool that serch for all *.MD files in your project and summarize them in the README.md
+readme-more is a tool that serch for all *.md files in your project and summarize them in the README.md.
+What readme-more specifically does is to search in the folder (default or custom) all the *.md files and list their links inside a provided _section_ of the README.md file.
+
+The outcome of this application is visible in the example [README.md](fixtures/README.md).
 
 
 ## Requirements

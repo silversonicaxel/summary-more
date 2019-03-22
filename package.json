@@ -35,9 +35,11 @@
     "index"
   ],
   "devDependencies": {
+    "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.6",
     "@types/node": "^11.11.5",
     "@types/sinon": "^7.0.10",
+    "chai": "^4.2.0",
     "mocha": "^6.0.2",
     "sinon": "^7.3.0",
     "source-map-support": "^0.5.11",

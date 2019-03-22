@@ -1,5 +1,5 @@
 # Example README
-readme-more is a tool that serch for all *.md files in your project and summarize them in the README.md
+summary-more is a tool that serch for all *.md files in your project and summarize them in the README.md
 
 ## Requirements
 * node 10.0+
@@ -8,7 +8,7 @@ readme-more is a tool that serch for all *.md files in your project and summariz
 ## Example
 
 ```
-$ read-more -s "fixtures" -b "fixtures"
+$ summary-more -s "fixtures" -b "fixtures"
 ```
 
 # Fixtures

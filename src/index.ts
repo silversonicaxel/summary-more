@@ -7,7 +7,7 @@ const configurer = new Configurer();
 const userConfiguration = configurer.fetchData();
 
 const maker = new Maker()
-maker.applyReadmeMore(
+maker.applySummaryMore(
   userConfiguration.baseFolder,
   userConfiguration.docsFolder,
   userConfiguration.docsSection

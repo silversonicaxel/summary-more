@@ -9,13 +9,14 @@ export class Maker {
   private writeFileAsync: Function
   private foldersToExlcude: string[] = ['node_modules', 'dist', '.git']
   private extensionToRead = '.md'
+  private summaryFileName = 'README.md'
+  private summaryFileFolder = ''
+  private summaryDocumentationFolder = ''
+  private summaryFileContent = ''
+  private summaryFileSection = ''
   private errorWrongFolder = 'Folder to be processed does not exist'
-  private errorNoReadmeFile = 'No README.md file found to be updated'
-  private errorNoMoreFiles = 'No more documentation files found to be updated within README.md'
-  private readmeFileFolder = ''
-  private readmeDocumentationFolder = ''
-  private readmeFileContent = ''
-  private readmeFileSection = ''
+  private errorNoSummaryFile = `No summary file ${this.summaryFileName} found to be updated`
+  private errorNoMoreFiles = `No more documentation files found to be updated in ${this.summaryFileName}`
   private existingSectionIndex = 0
   private existingSectionNextIndex = 0
 
@@ -24,25 +25,25 @@ export class Maker {
     this.statAsync = util.promisify(fs.stat)
     this.readFileAsync = util.promisify(fs.readFile)
     this.writeFileAsync = util.promisify(fs.writeFile)
-    this.updateReadmeFile = this.updateReadmeFile.bind(this)
+    this.updateSummaryFile = this.updateSummaryFile.bind(this)
     this.checkExistingSection = this.checkExistingSection.bind(this)
     this.checkExistingNextSection = this.checkExistingNextSection.bind(this)
     this.removeExistingSection = this.removeExistingSection.bind(this)
   }
 
-  async applyReadmeMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
-    this.readmeFileFolder = path.resolve(baseFolder)
-    this.readmeDocumentationFolder = path.resolve(baseFolder, docsFolder)
+  async applySummaryMore(baseFolder: string, docsFolder: string, section: string): Promise<void>  {
+    this.summaryFileFolder = path.resolve(baseFolder)
+    this.summaryDocumentationFolder = path.resolve(baseFolder, docsFolder)
 
-    this.readmeFileContent = await this.readReadmeFile(`${baseFolder}/README.md`)
-    if (this.readmeFileContent === '') {
-      console.error(this.errorNoReadmeFile)
+    this.summaryFileContent = await this.readSummaryFile(`${baseFolder}/${this.summaryFileName}`)
+    if (this.summaryFileContent === '') {
+      console.error(this.errorNoSummaryFile)
       process.exit(1)
       return
     }
 
-    this.readmeFileSection = section
-    this.readFilesFromFolder(this.readmeDocumentationFolder, this.updateReadmeFile)
+    this.summaryFileSection = section
+    this.readFilesFromFolder(this.summaryDocumentationFolder, this.updateSummaryFile)
   }
 
   private async readFilesFromFolder(folder: string, onReadFilesFromFolder: Function): Promise<void> {
@@ -74,7 +75,7 @@ export class Maker {
               }
             })
           } else {
-            if (readFile.indexOf(this.extensionToRead) >= 0 && path.basename(readFile) !== 'README.md') {
+            if (readFile.indexOf(this.extensionToRead) >= 0 && path.basename(readFile) !== this.summaryFileName) {
               results.push(readFile)
             }
 
@@ -88,26 +89,26 @@ export class Maker {
     }
   }
 
-  private async readReadmeFile(file: string): Promise<string> {
+  private async readSummaryFile(file: string): Promise<string> {
     try {
       return await this.readFileAsync(file, 'utf8')
 
-    } catch (readReadmeFileError) {
+    } catch (readSummaryFileError) {
       return ''
     }
   }
 
-  private async writeReadmeFile(file: string, contentFile: string): Promise<boolean> {
+  private async writeSummaryFile(file: string, contentFile: string): Promise<boolean> {
     try {
       await this.writeFileAsync(file, contentFile, 'utf8')
       return true
 
-    } catch (readReadmeFileError) {
+    } catch (writeSummaryFileError) {
       return false
     }
   }
 
-  private async updateReadmeFile(readError: Error, readFiles: string[]): Promise<void> {
+  private async updateSummaryFile(readError: Error, readFiles: string[]): Promise<void> {
     if (readError) {
       console.error(this.errorWrongFolder)
       process.exit(1)
@@ -121,14 +122,14 @@ export class Maker {
     }
 
     readFiles = readFiles.map((readFile: string) => {
-      const filePath = readFile.replace(`${this.readmeFileFolder}/`, '')
+      const filePath = readFile.replace(`${this.summaryFileFolder}/`, '')
       return `* [${path.parse(filePath).name}](${filePath})`
     })
 
-    this.handleContentReadme(this.getRowsFromReadmeFile(this.readmeFileContent), readFiles)
+    this.handleSummaryContent(this.getRowsFromFileContent(this.summaryFileContent), readFiles)
   }
 
-  private getRowsFromReadmeFile(contentFile: string): string[] {
+  private getRowsFromFileContent(contentFile: string): string[] {
     let rowsFile = contentFile.split('\n');
     rowsFile = rowsFile
       .map(row => row.trim())
@@ -136,12 +137,12 @@ export class Maker {
     return rowsFile
   }
 
-  private getFileFromReadmeRows(rowsFile: string[]): string {
+  private getContentFromRows(rowsFile: string[]): string {
     return rowsFile.join('\n')
   }
 
   private checkExistingSection(line: string, index: number): boolean {
-    const regExpr = new RegExp(`^([#]+)[ ](${this.readmeFileSection})$`, 'gi')
+    const regExpr = new RegExp(`^([#]+)[ ](${this.summaryFileSection})$`, 'gi')
     if (regExpr.test(line)) {
       this.existingSectionIndex = index + 1
       return true
@@ -162,12 +163,12 @@ export class Maker {
     return index < this.existingSectionIndex || index > this.existingSectionNextIndex;
   }
 
-  private async handleContentReadme(readLines: string[], documentLines: string[]) {
+  private async handleSummaryContent(readLines: string[], documentLines: string[]) {
     const isExistingSection = readLines.some(this.checkExistingSection)
     if (!isExistingSection) {
       this.existingSectionIndex = readLines.length - 1
       this.existingSectionNextIndex = readLines.length - 1
-      documentLines.splice(0, 0, ' ', `# ${this.readmeFileSection}`)
+      documentLines.splice(0, 0, ' ', `# ${this.summaryFileSection}`)
     }
 
     const isExistingNextSection = readLines.some(this.checkExistingNextSection)
@@ -177,6 +178,6 @@ export class Maker {
 
     readLines.splice(this.existingSectionIndex, this.existingSectionNextIndex - this.existingSectionIndex, ...documentLines);
 
-    await this.writeReadmeFile(`${this.readmeFileFolder}/README.md`, this.getFileFromReadmeRows(readLines))
+    await this.writeSummaryFile(`${this.summaryFileFolder}/${this.summaryFileName}`, this.getContentFromRows(readLines))
   }
 }

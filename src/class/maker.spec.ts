@@ -1,12 +1,18 @@
 import { Maker } from './maker'
-import { assert, createSandbox } from 'sinon'
+import { assert, createSandbox, spy } from 'sinon'
 import * as util from 'util'
 import * as fs from 'fs'
-import { expect } from 'chai'
+import { expect } from 'chai';
+import * as path from 'path'
 
-describe('#Configurer', () => {
+describe('#Maker', () => {
   let maker: Maker
   let sandboxSet: any
+
+  const baseFolder = 'bf'
+  const docsFolder = 'df'
+  const docsSection = 'Section'
+
 
   beforeEach(() => {
     maker = new Maker()
@@ -24,6 +30,24 @@ describe('#Configurer', () => {
 
       assert.calledWith(promisifyStub, fs.readdir)
       assert.calledWith(promisifyStub, fs.stat)
+    })
+  })
+
+  describe('#applySummaryMore', () => {
+    it('should initialize folders in use', () => {
+      sandboxSet.stub(maker, 'readSummaryFile')
+      sandboxSet.stub(maker, 'readFilesFromFolder')
+      maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+
+      expect(maker['summaryFileFolder']).to.equal(path.resolve(baseFolder))
+    })
+
+    it('should initialize section', () => {
+      sandboxSet.stub(maker, 'readSummaryFile')
+      sandboxSet.stub(maker, 'readFilesFromFolder')
+      maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+
+      expect(maker['summaryFileSection']).to.equal(docsSection)
     })
   })
 })

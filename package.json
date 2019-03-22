@@ -7,7 +7,8 @@
     "lint": "tslint src/**/*.ts",
     "build": "tsc -p tsconfig.build.json",
     "test": "_mocha --opts ./mocha.opts",
-    "test-watch": "_mocha --watch-extensions spec.ts --watch --opts ./mocha.opts"
+    "test-watch": "_mocha --watch-extensions spec.ts --watch --opts ./mocha.opts",
+    "test-coverage": "nyc _mocha --opts ./mocha.opts"
   },
   "author": {
     "name": "Alessandro (silversonicaxel) Rabitti",
@@ -53,5 +54,34 @@
   },
   "dependencies": {
     "commander": "^2.19.0"
+  },
+  "nyc": {
+    "include": [
+      "src/class/**/*.ts"
+    ],
+    "exclude": [
+      "src/**/*.spec.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text"
+    ],
+    "report-dir": "coverage/",
+    "all": true,
+    "check-coverage": true,
+    "sourceMap": true,
+    "cache": false,
+    "instrument": true,
+    "lines": 95,
+    "statements": 95,
+    "functions": 95,
+    "branches": 95
   }
 }

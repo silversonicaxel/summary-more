@@ -10,3 +10,5 @@ node_modules/
 
 # output
 dist/
+coverage/
+.nyc_output/

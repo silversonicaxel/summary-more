@@ -12,7 +12,7 @@ describe('#Maker', () => {
   const baseFolder = 'bf'
   const docsFolder = 'df'
   const docsSection = 'Section'
-
+  let executeWhenRead: Function
 
   beforeEach(() => {
     maker = new Maker()
@@ -89,4 +89,37 @@ describe('#Maker', () => {
       assert.calledWith(readFilesFromFolderStub, maker['summaryDocumentationFolder'], maker['updateSummaryFile'])
     })
   })
+
+  describe('#readFilesFromFolder', () => {
+    beforeEach(() => {
+      executeWhenRead = () => { };
+    });
+
+    it('should read the initial folder', async () => {
+      await maker['readFilesFromFolder'](docsFolder, executeWhenRead);
+
+      expect(maker).to.respondTo('readDirAsync');
+      expect(fs).to.respondTo('readdir');
+    });
+
+    it('should read folders recursively', async () => {
+      await maker['readFilesFromFolder'](docsFolder, executeWhenRead);
+
+      expect(path).to.respondTo('resolve');
+      expect(maker).to.respondTo('statAsync');
+      expect(maker).to.respondTo('readFilesFromFolder');
+    });
+
+    it('should manage error without thrown exception if folders does not exist', async () => {
+      let readFilesFromFolderError;
+
+      try {
+        await maker['readFilesFromFolder']('./not-existing-folder', executeWhenRead);
+      } catch (error) {
+        readFilesFromFolderError = error;
+      }
+
+      expect(readFilesFromFolderError).to.equal(undefined);
+    });
+  });
 })

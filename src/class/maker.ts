@@ -119,7 +119,7 @@ export class Maker {
 
     readFiles = readFiles.map((readFile: string) => {
       const filePath = readFile.replace(`${process.cwd()}/`, '')
-      return `[${path.parse(filePath).name}](${filePath})`
+      return `* [${path.parse(filePath).name}](${filePath})`
     })
 
     this.handleContentReadme(this.getRowsFromReadmeFile(this.readmeFileContent), readFiles)

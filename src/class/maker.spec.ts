@@ -201,7 +201,7 @@ describe('#Maker', () => {
     it('should return an missing files error', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
-      const emptyError = <unknown>null;
+      const emptyError = <unknown>null
 
       maker['updateSummaryFile'](<Error>emptyError, [])
 
@@ -245,5 +245,84 @@ describe('#Maker', () => {
 
       expect(fileContent).to.deep.equal(expectedFileContent)
     })
+  })
+
+  describe('#checkExistingSection', () => {
+    it('should return true if a line represents a provided section', () => {
+      maker['summaryFileSection'] = 'Section'
+
+      const isExistingSection = maker['checkExistingSection']('### Section', 2)
+
+      expect(isExistingSection).to.equal(true)
+    })
+
+    it('should update section index if section exists', () => {
+      maker['summaryFileSection'] = 'Section'
+      const currentIndex = 3
+      maker['checkExistingSection']('### Section', currentIndex)
+
+      expect(maker['existingSectionIndex']).to.equal(currentIndex + 1)
+    })
+
+    it('should return false if a line does not represent a provided section', () => {
+      maker['summaryFileSection'] = 'Section'
+
+      const isExistingSection = maker['checkExistingSection']('### Wrong section', 2)
+
+      expect(isExistingSection).to.equal(false)
+    })
+  })
+
+  describe('#checkExistingNextSection', () => {
+    it('should return true if a line represents the next section compared to the provided section', () => {
+      maker['existingSectionIndex'] = 2
+      maker['existingSectionNextIndex'] = 0
+      const anotherIndex = maker['existingSectionIndex'] + 3
+
+      const isExistingNextSection = maker['checkExistingNextSection']('### Another Section', anotherIndex)
+
+      expect(isExistingNextSection).to.equal(true)
+    })
+
+    it('should update next section index if next section exists', () => {
+      maker['existingSectionIndex'] = 2
+      maker['existingSectionNextIndex'] = 0
+      const anotherIndex = maker['existingSectionIndex'] + 3
+
+      maker['checkExistingNextSection']('### Another Section', anotherIndex)
+
+      expect(maker['existingSectionNextIndex']).to.equal(anotherIndex - 1)
+    })
+
+    it('should return false if a line does not represents the next section becasue it is not a section', () => {
+      maker['existingSectionIndex'] = 2
+      maker['existingSectionNextIndex'] = 0
+      const anotherIndex = maker['existingSectionIndex'] + 3
+
+      const isExistingNextSection = maker['checkExistingNextSection']('Some text not section title', anotherIndex)
+
+      expect(isExistingNextSection).to.equal(false)
+    })
+
+    it('should return false if a line does not represents the next section becasue there is already a next section', () => {
+      maker['existingSectionIndex'] = 2
+      maker['existingSectionNextIndex'] = 4
+      const anotherIndex = maker['existingSectionIndex'] + 3
+
+      const isExistingNextSection = maker['checkExistingNextSection']('### Another Section', anotherIndex)
+
+      expect(isExistingNextSection).to.equal(false)
+    })
+
+    it('should return false if a line does not represents the next section becasue it is a previous current section index', () => {
+      maker['existingSectionIndex'] = 5
+      maker['existingSectionNextIndex'] = 0
+      const anotherIndex = maker['existingSectionIndex'] - 2
+
+      const isExistingNextSection = maker['checkExistingNextSection']('### Another Section', anotherIndex)
+
+      expect(isExistingNextSection).to.equal(false)
+    })
+
   })
 })

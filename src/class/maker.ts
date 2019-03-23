@@ -163,7 +163,7 @@ export class Maker {
     return index < this.existingSectionIndex || index > this.existingSectionNextIndex
   }
 
-  private async handleSummaryContent(readLines: string[], documentLines: string[]) {
+  private async handleSummaryContent(readLines: string[], documentLines: string[]): Promise<void> {
     const isExistingSection = readLines.some(this.checkExistingSection)
     if (!isExistingSection) {
       this.existingSectionIndex = readLines.length - 1

@@ -215,13 +215,35 @@ describe('#Maker', () => {
       const handleSummaryContentStub = sandboxSet.stub(maker, 'handleSummaryContent')
       const rowsSummary = ['A', 'B']
       sandboxSet.stub(maker, 'getRowsFromFileContent').returns(rowsSummary)
-      const emptyError = <unknown>null;
+      const emptyError = <unknown>null
       maker['summaryFileContent'] = 'A\nB\nC\n'
 
       maker['updateSummaryFile'](<Error>emptyError, documents)
 
       assert.calledOnce(handleSummaryContentStub)
       assert.calledWith(handleSummaryContentStub, rowsSummary, summaryDocuments)
+    })
+  })
+
+  describe('#getRowsFromFileContent', () => {
+    it('should return rows from file content', () => {
+      const fileContent = 'A\nB'
+      const expectedRows = ['A', 'B']
+
+      const rows = maker['getRowsFromFileContent'](fileContent)
+
+      expect(rows).to.deep.equal(expectedRows)
+    })
+  })
+
+  describe('#getContentFromRows', () => {
+    it('should return file content from rows', () => {
+      const rows = ['A', 'B']
+      const expectedFileContent = 'A\nB'
+
+      const fileContent = maker['getContentFromRows'](rows)
+
+      expect(fileContent).to.deep.equal(expectedFileContent)
     })
   })
 })

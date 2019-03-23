@@ -6,9 +6,10 @@
   "scripts": {
     "lint": "tslint src/**/*.ts",
     "build": "tsc -p tsconfig.build.json",
-    "test": "_mocha --opts ./mocha.opts",
-    "test-watch": "_mocha --watch-extensions ts -w --opts ./mocha.opts",
-    "test-coverage": "nyc _mocha --opts ./mocha.opts",
+    "pre-test": "mkdir -p fixtures/empty/",
+    "test": "npm run pre-test && _mocha --opts ./mocha.opts",
+    "test-watch": "npm run pre-test && _mocha --watch-extensions ts -w --opts ./mocha.opts",
+    "test-coverage": "npm run pre-test && nyc _mocha --opts ./mocha.opts",
     "coveralls": "nyc npm run test && nyc report --reporter=text-lcov | coveralls"
   },
   "author": {

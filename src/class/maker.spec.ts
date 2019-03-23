@@ -323,6 +323,29 @@ describe('#Maker', () => {
 
       expect(isExistingNextSection).to.equal(false)
     })
+  })
 
+  describe('#removeExistingSection', () => {
+    const checkedIndex = 5
+    it('should return true if current index is lower than existing begin section index', () => {
+      maker['existingSectionIndex'] = checkedIndex + 1
+      maker['existingSectionNextIndex'] = checkedIndex + 5
+      const isRemovable = maker['removeExistingSection']('Text', checkedIndex)
+      expect(isRemovable).to.equal(true)
+    })
+
+    it('should return true if current index is bigger than existing end section index', () => {
+      maker['existingSectionIndex'] = checkedIndex - 2
+      maker['existingSectionNextIndex'] = checkedIndex - 1
+      const isRemovable = maker['removeExistingSection']('Text', checkedIndex)
+      expect(isRemovable).to.equal(true)
+    })
+
+    it('should return false if current index is in the section indexes', () => {
+      maker['existingSectionIndex'] = checkedIndex - 1
+      maker['existingSectionNextIndex'] = checkedIndex + 1
+      const isRemovable = maker['removeExistingSection']('Text', checkedIndex)
+      expect(isRemovable).to.equal(false)
+    })
   })
 })

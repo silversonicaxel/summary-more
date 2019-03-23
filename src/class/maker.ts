@@ -130,7 +130,7 @@ export class Maker {
   }
 
   private getRowsFromFileContent(contentFile: string): string[] {
-    let rowsFile = contentFile.split('\n');
+    let rowsFile = contentFile.split('\n')
     rowsFile = rowsFile
       .map(row => row.trim())
 
@@ -160,7 +160,7 @@ export class Maker {
   }
 
   private removeExistingSection(line: string, index: number): boolean {
-    return index < this.existingSectionIndex || index > this.existingSectionNextIndex;
+    return index < this.existingSectionIndex || index > this.existingSectionNextIndex
   }
 
   private async handleSummaryContent(readLines: string[], documentLines: string[]) {
@@ -176,7 +176,7 @@ export class Maker {
       this.existingSectionNextIndex = readLines.length - 1
     }
 
-    readLines.splice(this.existingSectionIndex, this.existingSectionNextIndex - this.existingSectionIndex, ...documentLines);
+    readLines.splice(this.existingSectionIndex, this.existingSectionNextIndex - this.existingSectionIndex, ...documentLines)
 
     await this.writeSummaryFile(`${this.summaryFileFolder}/${this.summaryFileName}`, this.getContentFromRows(readLines))
   }

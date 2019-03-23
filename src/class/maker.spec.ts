@@ -45,8 +45,8 @@ describe('#Maker', () => {
     it('should read summary file with no error', async () => {
       const readSummaryFileStub = sandboxSet.stub(maker, 'readSummaryFile').returns('Some content')
       sandboxSet.stub(maker, 'readFilesFromFolder')
-      const consoleStub = sandboxSet.stub(console, 'error');
-      const processStub = sandboxSet.stub(process, 'exit');
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
 
       await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
 
@@ -59,8 +59,8 @@ describe('#Maker', () => {
     it('should read summary file with an error', async () => {
       const readSummaryFileStub = sandboxSet.stub(maker, 'readSummaryFile').returns('')
       sandboxSet.stub(maker, 'readFilesFromFolder')
-      const consoleStub = sandboxSet.stub(console, 'error');
-      const processStub = sandboxSet.stub(process, 'exit');
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
 
       await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
 
@@ -92,34 +92,34 @@ describe('#Maker', () => {
 
   describe('#readFilesFromFolder', () => {
     beforeEach(() => {
-      executeWhenRead = () => { };
-    });
+      executeWhenRead = () => { }
+    })
 
     it('should read the initial folder', async () => {
-      await maker['readFilesFromFolder'](docsFolder, executeWhenRead);
+      await maker['readFilesFromFolder'](docsFolder, executeWhenRead)
 
-      expect(maker).to.respondTo('readDirAsync');
-      expect(fs).to.respondTo('readdir');
-    });
+      expect(maker).to.respondTo('readDirAsync')
+      expect(fs).to.respondTo('readdir')
+    })
 
     it('should read folders recursively', async () => {
-      await maker['readFilesFromFolder'](docsFolder, executeWhenRead);
+      await maker['readFilesFromFolder'](docsFolder, executeWhenRead)
 
-      expect(path).to.respondTo('resolve');
-      expect(maker).to.respondTo('statAsync');
-      expect(maker).to.respondTo('readFilesFromFolder');
-    });
+      expect(path).to.respondTo('resolve')
+      expect(maker).to.respondTo('statAsync')
+      expect(maker).to.respondTo('readFilesFromFolder')
+    })
 
     it('should manage error without thrown exception if folders does not exist', async () => {
-      let readFilesFromFolderError;
+      let readFilesFromFolderError
 
       try {
-        await maker['readFilesFromFolder']('./not-existing-folder', executeWhenRead);
+        await maker['readFilesFromFolder']('./not-existing-folder', executeWhenRead)
       } catch (error) {
-        readFilesFromFolderError = error;
+        readFilesFromFolderError = error
       }
 
-      expect(readFilesFromFolderError).to.equal(undefined);
-    });
-  });
+      expect(readFilesFromFolderError).to.equal(undefined)
+    })
+  })
 })

@@ -122,4 +122,57 @@ describe('#Maker', () => {
       expect(readFilesFromFolderError).to.equal(undefined)
     })
   })
+
+  describe('#readSummaryFile', async () => {
+    it('should read summary file', async () => {
+      const file = './somefile.md'
+      const expectedFileContent = 'Bla bla bla'
+      const readFileAsyncStub = sandboxSet.stub(maker, 'readFileAsync').returns(expectedFileContent)
+
+      const fileContent = await maker['readSummaryFile'](file)
+
+      assert.calledOnce(readFileAsyncStub)
+      assert.calledWith(readFileAsyncStub, file, 'utf8')
+      expect(fileContent).to.equal(expectedFileContent)
+    })
+
+    it('should return an error', async () => {
+      const file = './somefile.md'
+      const readFileAsyncStub = sandboxSet.stub(maker, 'readFileAsync').yields('readError')
+
+      const fileContent = await maker['readSummaryFile'](file)
+
+      assert.calledOnce(readFileAsyncStub)
+      assert.calledWith(readFileAsyncStub, file, 'utf8')
+      expect(fileContent).to.equal('')
+    })
+  })
+
+  describe('#writeSummaryFile', async () => {
+    it('should write summary file', async () => {
+      const file = './somefile.md'
+      const fileContent = 'Text'
+      const expectedIsWriteCorrect = true
+      const writeFileAsyncStub = sandboxSet.stub(maker, 'writeFileAsync').returns(expectedIsWriteCorrect)
+
+      const isWriteCorrect = await maker['writeSummaryFile'](file, fileContent)
+
+      assert.calledOnce(writeFileAsyncStub)
+      assert.calledWith(writeFileAsyncStub, file, fileContent, 'utf8')
+      expect(isWriteCorrect).to.equal(expectedIsWriteCorrect)
+    })
+
+    it('should return an error', async () => {
+      const file = './somefile.md'
+      const fileContent = 'Text'
+      const expectedIsWriteCorrect = false
+      const writeFileAsyncStub = sandboxSet.stub(maker, 'writeFileAsync').yields('writeError')
+
+      const isWriteCorrect = await maker['writeSummaryFile'](file, fileContent)
+
+      assert.calledOnce(writeFileAsyncStub)
+      assert.calledWith(writeFileAsyncStub, file, fileContent, 'utf8')
+      expect(isWriteCorrect).to.equal(expectedIsWriteCorrect)
+    })
+  })
 })

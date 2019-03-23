@@ -11,6 +11,7 @@ describe('#Maker', () => {
 
   const baseFolder = 'bf'
   const docsFolder = 'df'
+  const docsFixturesFolder = 'fixtures'
   const docsSection = 'Section'
   const documents = [
     '/one/FILE.md',
@@ -111,7 +112,7 @@ describe('#Maker', () => {
     })
 
     it('should read folders recursively', async () => {
-      await maker['readFilesFromFolder'](docsFolder, executeWhenRead)
+      await maker['readFilesFromFolder'](docsFixturesFolder, executeWhenRead)
 
       expect(path).to.respondTo('resolve')
       expect(maker).to.respondTo('statAsync')

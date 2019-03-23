@@ -12,6 +12,14 @@ describe('#Maker', () => {
   const baseFolder = 'bf'
   const docsFolder = 'df'
   const docsSection = 'Section'
+  const documents = [
+    '/one/FILE.md',
+    '/two/FILE2.md'
+  ]
+  const summaryDocuments = [
+    '* [FILE](one/FILE.md)',
+    '* [FILE2](two/FILE2.md)'
+  ]
   let executeWhenRead: Function
 
   beforeEach(() => {
@@ -173,6 +181,47 @@ describe('#Maker', () => {
       assert.calledOnce(writeFileAsyncStub)
       assert.calledWith(writeFileAsyncStub, file, fileContent, 'utf8')
       expect(isWriteCorrect).to.equal(expectedIsWriteCorrect)
+    })
+  })
+
+  describe('#updateSummaryFile', () => {
+    it('should return an reading error', () => {
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
+      const readError = new Error('readError')
+
+      maker['updateSummaryFile'](readError, documents)
+
+      assert.calledOnce(consoleStub)
+      assert.calledWith(consoleStub, maker['errorWrongFolder'])
+      assert.calledOnce(processStub)
+      assert.calledWith(processStub, 1)
+    })
+
+    it('should return an missing files error', () => {
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
+      const emptyError = <unknown>null;
+
+      maker['updateSummaryFile'](<Error>emptyError, [])
+
+      assert.calledOnce(consoleStub)
+      assert.calledWith(consoleStub, maker['errorNoMoreFiles'])
+      assert.calledOnce(processStub)
+      assert.calledWith(processStub, 1)
+    })
+
+    it('should handle the summary content', () => {
+      const handleSummaryContentStub = sandboxSet.stub(maker, 'handleSummaryContent')
+      const rowsSummary = ['A', 'B']
+      sandboxSet.stub(maker, 'getRowsFromFileContent').returns(rowsSummary)
+      const emptyError = <unknown>null;
+      maker['summaryFileContent'] = 'A\nB\nC\n'
+
+      maker['updateSummaryFile'](<Error>emptyError, documents)
+
+      assert.calledOnce(handleSummaryContentStub)
+      assert.calledWith(handleSummaryContentStub, rowsSummary, summaryDocuments)
     })
   })
 })

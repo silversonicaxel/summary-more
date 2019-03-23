@@ -8,7 +8,6 @@ This is a fast and automatic way to quickly link all the documents inside of a p
 
 The outcome of this application is visible in the example [README.md](fixtures/README.md).
 
-
 ## Requirements
 * node 10.0+
 * npm 6.0+
@@ -53,7 +52,12 @@ Usage: summary-more [options] <option>
 
 ```bash
 $ summary-more -s "documentation"
+```
 
+```bash
 $ summary-more -d "docs" -s "Summary"
 ```
 
+```bash
+$ summary-more -b "manual" -d "docs" -s "Summary"
+```

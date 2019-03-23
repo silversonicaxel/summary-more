@@ -7,9 +7,11 @@ describe('#Configurer', () => {
   let configurer: Configurer
   let sandboxSet: any
   const defaultProgramSection = 'Summary'
-  program['docsSection'] = defaultProgramSection
+
 
   beforeEach(() => {
+    program['docsSection'] = defaultProgramSection
+
     configurer = new Configurer()
     sandboxSet = createSandbox()
   })
@@ -36,6 +38,29 @@ describe('#Configurer', () => {
       expect(program).to.respondTo('allowUnknownOption')
       expect(program).to.respondTo('option')
       expect(program).to.respondTo('parse')
+    })
+
+    it('should not throw an error', () => {
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
+
+      configurer['setupOptions']()
+
+      assert.notCalled(consoleStub)
+      assert.notCalled(processStub)
+    })
+
+    it('should throw an error due to missing mandatory parameters', () => {
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
+      delete program['docsSection']
+
+      configurer['setupOptions']()
+
+      assert.calledOnce(consoleStub)
+      assert.calledWith(consoleStub, '-s, --docsSection required')
+      assert.calledOnce(processStub)
+      assert.calledWith(processStub, 1)
     })
   })
 

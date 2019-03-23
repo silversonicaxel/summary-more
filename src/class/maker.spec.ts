@@ -12,6 +12,7 @@ describe('#Maker', () => {
   const baseFolder = 'bf'
   const docsFolder = 'df'
   const docsFixturesFolder = 'fixtures'
+  const docsEmptyFolder = 'fixtures/empty'
   const docsSection = 'Section'
   const documents = [
     '/one/FILE.md',
@@ -117,6 +118,15 @@ describe('#Maker', () => {
       expect(path).to.respondTo('resolve')
       expect(maker).to.respondTo('statAsync')
       expect(maker).to.respondTo('readFilesFromFolder')
+    })
+
+    it('should read folder with no document files', async () => {
+      const resolveStub = sandboxSet.stub(path, 'resolve')
+
+      await maker['readFilesFromFolder'](docsEmptyFolder, executeWhenRead)
+
+      expect(maker).to.respondTo('readDirAsync')
+      assert.notCalled(resolveStub)
     })
 
     it('should manage error without thrown exception if folders does not exist', async () => {

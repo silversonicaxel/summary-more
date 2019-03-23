@@ -108,7 +108,7 @@ export class Maker {
     }
   }
 
-  private async updateSummaryFile(readError: Error, readFiles: string[]): Promise<void> {
+  private updateSummaryFile(readError: Error, readFiles: string[]): void {
     if (readError) {
       console.error(this.errorWrongFolder)
       process.exit(1)

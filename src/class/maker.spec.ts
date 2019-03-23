@@ -328,6 +328,7 @@ describe('#Maker', () => {
 
   describe('#removeExistingSection', () => {
     const checkedIndex = 5
+
     it('should return true if current index is lower than existing begin section index', () => {
       maker['existingSectionIndex'] = checkedIndex + 1
       maker['existingSectionNextIndex'] = checkedIndex + 5
@@ -347,6 +348,88 @@ describe('#Maker', () => {
       maker['existingSectionNextIndex'] = checkedIndex + 1
       const isRemovable = maker['removeExistingSection']('Text', checkedIndex)
       expect(isRemovable).to.equal(false)
+    })
+  })
+
+  describe('#handleSummaryContent', () => {
+    let readLines: string[]
+    let documentLines: string[]
+    let fileToWrite: string
+
+    beforeEach(() => {
+      maker['summaryFileFolder'] = 'fixtures'
+      maker['summaryFileFolder'] = 'README.md'
+
+      readLines = [
+        '# A',
+        'b',
+        'c',
+        '',
+        '### D',
+        'e',
+        'f',
+        '',
+        '### G',
+        'h',
+        'i',
+        ''
+      ]
+
+      documentLines = [
+        '1',
+        '2',
+        ''
+      ]
+
+      fileToWrite = `${maker['summaryFileFolder']}/${maker['summaryFileName']}`
+    })
+
+    it('should write summary file with existing section and existing next section', () => {
+      maker['summaryFileSection'] = 'D'
+      maker['existingSectionIndex'] = 0
+      maker['existingSectionNextIndex'] = 0
+      const writeSummaryFileStub = sandboxSet.stub(maker, 'writeSummaryFile')
+      const summaryContent = 'content'
+      sandboxSet.stub(maker, 'getContentFromRows').returns(summaryContent)
+
+      maker['handleSummaryContent'](readLines, documentLines)
+
+      assert.calledOnce(writeSummaryFileStub)
+      assert.calledWith(writeSummaryFileStub, fileToWrite, summaryContent)
+      expect(maker['existingSectionIndex']).not.equal(0)
+      expect(maker['existingSectionNextIndex']).not.equal(0)
+    })
+
+    it('should write summary file with existing section and withouht existing next section', () => {
+      maker['summaryFileSection'] = 'G'
+      maker['existingSectionIndex'] = 0
+      maker['existingSectionNextIndex'] = 0
+      const writeSummaryFileStub = sandboxSet.stub(maker, 'writeSummaryFile')
+      const summaryContent = 'content'
+      sandboxSet.stub(maker, 'getContentFromRows').returns(summaryContent)
+
+      maker['handleSummaryContent'](readLines, documentLines)
+
+      assert.calledOnce(writeSummaryFileStub)
+      assert.calledWith(writeSummaryFileStub, fileToWrite, summaryContent)
+      expect(maker['existingSectionIndex']).not.equal(0)
+      expect(maker['existingSectionNextIndex']).not.equal(0)
+    })
+
+    it('should write summary file without existing section and existing next section', () => {
+      maker['summaryFileSection'] = 'Z'
+      maker['existingSectionIndex'] = 0
+      maker['existingSectionNextIndex'] = 0
+      const writeSummaryFileStub = sandboxSet.stub(maker, 'writeSummaryFile')
+      const summaryContent = 'content'
+      sandboxSet.stub(maker, 'getContentFromRows').returns(summaryContent)
+
+      maker['handleSummaryContent'](readLines, documentLines)
+
+      assert.calledOnce(writeSummaryFileStub)
+      assert.calledWith(writeSummaryFileStub, fileToWrite, summaryContent)
+      expect(maker['existingSectionIndex']).not.equal(0)
+      expect(maker['existingSectionNextIndex']).not.equal(0)
     })
   })
 })

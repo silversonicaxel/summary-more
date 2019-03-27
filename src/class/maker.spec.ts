@@ -14,6 +14,7 @@ describe('#Maker', () => {
   const docsFixturesFolder = 'fixtures'
   const docsEmptyFolder = 'fixtures/empty'
   const docsSection = 'Section'
+  const docsSectionHeadingLevel = 3
   const documents = [
     '/one/FILE.md',
     '/two/FILE2.md'
@@ -47,9 +48,10 @@ describe('#Maker', () => {
     it('should initialize folders in use', () => {
       sandboxSet.stub(maker, 'readSummaryFile')
       sandboxSet.stub(maker, 'readFilesFromFolder')
-      maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+      maker.applySummaryMore(baseFolder, docsFolder, docsSection, docsSectionHeadingLevel)
 
       expect(maker['summaryFileFolder']).to.equal(path.resolve(baseFolder))
+      expect(maker['summaryFileSectionHeadingLevel']).to.equal(docsSectionHeadingLevel)
     })
 
     it('should read summary file with no error', async () => {
@@ -58,7 +60,7 @@ describe('#Maker', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
 
-      await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+      await maker.applySummaryMore(baseFolder, docsFolder, docsSection, docsSectionHeadingLevel)
 
       assert.calledOnce(readSummaryFileStub)
       assert.calledWith(readSummaryFileStub, `${baseFolder}/${maker['summaryFileName']}`)
@@ -72,7 +74,7 @@ describe('#Maker', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
 
-      await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+      await maker.applySummaryMore(baseFolder, docsFolder, docsSection, docsSectionHeadingLevel)
 
       assert.calledOnce(readSummaryFileStub)
       assert.calledWith(readSummaryFileStub, `${baseFolder}/${maker['summaryFileName']}`)
@@ -85,7 +87,7 @@ describe('#Maker', () => {
     it('should initialize section', async () => {
       sandboxSet.stub(maker, 'readSummaryFile').returns('Some content')
       sandboxSet.stub(maker, 'readFilesFromFolder')
-      await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+      await maker.applySummaryMore(baseFolder, docsFolder, docsSection, docsSectionHeadingLevel)
 
       expect(maker['summaryFileSection']).to.equal(docsSection)
     })
@@ -93,7 +95,7 @@ describe('#Maker', () => {
     it('should read documents from folder', async () => {
       sandboxSet.stub(maker, 'readSummaryFile').returns('Some content')
       const readFilesFromFolderStub = sandboxSet.stub(maker, 'readFilesFromFolder')
-      await maker.applySummaryMore(baseFolder, docsFolder, docsSection)
+      await maker.applySummaryMore(baseFolder, docsFolder, docsSection, docsSectionHeadingLevel)
 
       assert.calledOnce(readFilesFromFolderStub)
       assert.calledWith(readFilesFromFolderStub, maker['summaryDocumentationFolder'], maker['updateSummaryFile'])
@@ -273,6 +275,15 @@ describe('#Maker', () => {
       maker['checkExistingSection']('### Section', currentIndex)
 
       expect(maker['existingSectionIndex']).to.equal(currentIndex)
+    })
+
+    it('should update heading level index if section exists', () => {
+      maker['summaryFileSection'] = 'Testing'
+      const headingLevel = 5
+      maker['summaryFileSectionHeadingLevel'] = headingLevel
+      maker['checkExistingSection']('# Ciao', 3)
+
+      expect(maker['summaryFileSectionHeadingLevel']).to.equal(headingLevel)
     })
 
     it('should return false if a line does not represent a provided section', () => {

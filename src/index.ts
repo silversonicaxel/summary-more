@@ -10,5 +10,6 @@ const maker = new Maker()
 maker.applySummaryMore(
   userConfiguration.baseFolder,
   userConfiguration.docsFolder,
-  userConfiguration.docsSection
+  userConfiguration.docsSection,
+  userConfiguration.headingLevel
 )

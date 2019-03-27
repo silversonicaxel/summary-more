@@ -7,6 +7,7 @@ describe('#Configurer', () => {
   let configurer: Configurer
   let sandboxSet: any
   const defaultProgramSection = 'Summary'
+  const defaultHeadingLevel = undefined
 
 
   beforeEach(() => {
@@ -50,7 +51,7 @@ describe('#Configurer', () => {
       assert.notCalled(processStub)
     })
 
-    it('should throw an error due to missing mandatory parameters', () => {
+    it('should throw an error due to missing mandatory docsSection parameter', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
       delete program['docsSection']
@@ -62,6 +63,21 @@ describe('#Configurer', () => {
       assert.calledOnce(processStub)
       assert.calledWith(processStub, 1)
     })
+
+    it('should throw an error due to wrong headingLevel parameter', () => {
+      const consoleStub = sandboxSet.stub(console, 'error')
+      const processStub = sandboxSet.stub(process, 'exit')
+      program['headingLevel'] = 9
+
+      configurer['setupOptions']()
+
+      delete program['headingLevel']
+
+      assert.calledOnce(consoleStub)
+      assert.calledWith(consoleStub, '-l, --headingLevel is not set correctly, it must be an integer between 1 and 6')
+      assert.calledOnce(processStub)
+      assert.calledWith(processStub, 1)
+    })
   })
 
   describe('#fetchData', () => {
@@ -69,10 +85,12 @@ describe('#Configurer', () => {
       const expectedConfigurerData = <ConfigurerData>{
         baseFolder: 'folder',
         docsFolder: 'subfolder',
-        docsSection: defaultProgramSection
+        docsSection: defaultProgramSection,
+        headingLevel: 3
       }
       program['baseFolder'] = expectedConfigurerData.baseFolder
       program['docsFolder'] = expectedConfigurerData.docsFolder
+      program['headingLevel'] = expectedConfigurerData.headingLevel
 
       const data = configurer.fetchData()
 
@@ -83,11 +101,13 @@ describe('#Configurer', () => {
       const expectedConfigurerData = <ConfigurerData>{
         baseFolder: './',
         docsFolder: './',
-        docsSection: defaultProgramSection
+        docsSection: defaultProgramSection,
+        headingLevel: defaultHeadingLevel
       }
 
       delete program['baseFolder']
       delete program['docsFolder']
+      delete program['headingLevel']
 
       const data = configurer.fetchData()
 

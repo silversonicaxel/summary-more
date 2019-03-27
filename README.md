@@ -42,6 +42,7 @@ Usage: summary-more [options] <option>
     -s, --docsSection [docsSection]         * Select section where to list documentation in README.md
     -b, --baseFolder [baseFolder]           Select base folder where README.md is located
     -d, --docsFolder [docsFolder]           Select subfolder of the base folder where documentation is located
+    -l, --headingLevel [headingLevel]       Select heading level of the section title within README.md
     -h, --help                              Output usage information
 
 

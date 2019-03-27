@@ -214,9 +214,9 @@ describe('#Maker', () => {
     it('should return an missing files error', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
-      const emptyError = <unknown>null
+      const emptyError = null
 
-      maker['updateSummaryFile'](<Error>emptyError, [])
+      maker['updateSummaryFile'](<any>emptyError, [])
 
       assert.calledOnce(consoleStub)
       assert.calledWith(consoleStub, maker['errorNoMoreFiles'])
@@ -228,10 +228,10 @@ describe('#Maker', () => {
       const handleSummaryContentStub = sandboxSet.stub(maker, 'handleSummaryContent')
       const rowsSummary = ['A', 'B']
       sandboxSet.stub(maker, 'getRowsFromFileContent').returns(rowsSummary)
-      const emptyError = <unknown>null
+      const emptyError = null
       maker['summaryFileContent'] = 'A\nB\nC\n'
 
-      maker['updateSummaryFile'](<Error>emptyError, documents)
+      maker['updateSummaryFile'](<any>emptyError, documents)
 
       assert.calledOnce(handleSummaryContentStub)
       assert.calledWith(handleSummaryContentStub, rowsSummary, summaryDocuments)

@@ -62,3 +62,7 @@ $ summary-more -d "docs" -s "Summary"
 ```bash
 $ summary-more -b "manual" -d "docs" -s "Summary"
 ```
+
+```bash
+$ summary-more -b "manual" -d "docs" -s "Summary" -l 2
+```

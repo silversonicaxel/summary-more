@@ -52,17 +52,17 @@ Usage: summary-more [options] <option>
 ## Usage
 
 ```bash
-$ summary-more -s "documentation"
+$ summary-more -s 'documentation'
 ```
 
 ```bash
-$ summary-more -d "docs" -s "Summary"
+$ summary-more -d 'docs' -s 'Summary'
 ```
 
 ```bash
-$ summary-more -b "manual" -d "docs" -s "Summary"
+$ summary-more -b 'manual' -d 'docs' -s 'Summary'
 ```
 
 ```bash
-$ summary-more -b "manual" -d "docs" -s "Summary" -l 2
+$ summary-more -b 'manual' -d 'docs' -s 'Summary' -l 2
 ```

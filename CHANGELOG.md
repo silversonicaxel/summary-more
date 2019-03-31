@@ -1,3 +1,11 @@
+## 2.0.1 (March 31, 2019)
+
+### Bugfix
+
+* Fixed issue of listing files with spaces within their names
+* Improved documentation
+
+
 ## 2.0.0 (March 27, 2019)
 
 ### Second release

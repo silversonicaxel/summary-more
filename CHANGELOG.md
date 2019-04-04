@@ -1,3 +1,12 @@
+## 3.0.0 (April 4, 2019)
+
+### Bugfix
+
+* Fixed issue of listing files with spaces within their names
+* Improved folders of documents in README.md section
+* Upgraded libraries
+
+
 ## 2.0.1 (March 31, 2019)
 
 ### Bugfix

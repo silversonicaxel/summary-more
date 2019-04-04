@@ -129,7 +129,12 @@ export class Maker {
 
     readFiles = readFiles.map((readFile: string) => {
       const filePath = readFile.replace(`${this.summaryFileFolder}/`, '')
-      return `* [${path.parse(filePath).name}](${filePath.replace(/[ ]/g, '&#32;')})`
+
+      const documentName = path.parse(filePath).name
+      const documentFolder = path.parse(filePath).dir ? ` (${path.parse(filePath).dir.replace('/', ' / ')})` : ''
+      const documentLink = filePath.replace(/[ ]/g, '&#32;')
+
+      return `* [${documentName}${documentFolder}](${documentLink})`
     })
 
     this.handleSummaryContent(this.getRowsFromFileContent(this.summaryFileContent), readFiles)

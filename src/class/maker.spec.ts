@@ -16,12 +16,16 @@ describe('#Maker', () => {
   const docsSection = 'Section'
   const docsSectionHeadingLevel = 3
   const documents = [
+    'MAIN.md',
     '/one/FILE.md',
-    '/two/FILE2.md'
+    '/two/FILE2.md',
+    '/two/and more/FI LE2.md'
   ]
   const summaryDocuments = [
-    '* [FILE](one/FILE.md)',
-    '* [FILE2](two/FILE2.md)'
+    '* [MAIN](MAIN.md)',
+    '* [FILE (one)](one/FILE.md)',
+    '* [FILE2 (two)](two/FILE2.md)',
+    '* [FI LE2 (two / and more)](two/and&#32;more/FI&#32;LE2.md)'
   ]
   let executeWhenRead: Function
 

@@ -1,3 +1,10 @@
+## 3.0.1 (April 15, 2019)
+
+### Added
+
+* Upgraded libraries
+
+
 ## 3.0.0 (April 4, 2019)
 
 ### Bugfix

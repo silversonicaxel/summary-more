@@ -1,3 +1,10 @@
+## 3.0.2 (April 28, 2019)
+
+### Improved
+
+* Improved documentation
+
+
 ## 3.0.1 (April 15, 2019)
 
 ### Added

@@ -1,3 +1,10 @@
+## 3.0.3 (June 7, 2019)
+
+### Added
+
+* Upgraded libraries
+
+
 ## 3.0.2 (April 28, 2019)
 
 ### Improved

@@ -1,3 +1,10 @@
+## 3.0.4 (June 7, 2019)
+
+### Added
+
+* Brought coverage test to 100%
+
+
 ## 3.0.3 (June 7, 2019)
 
 ### Added

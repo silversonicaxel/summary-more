@@ -104,6 +104,15 @@ describe('#Maker', () => {
       assert.calledOnce(readFilesFromFolderStub)
       assert.calledWith(readFilesFromFolderStub, maker['summaryDocumentationFolder'], maker['updateSummaryFile'])
     })
+
+    it('should leave the default heading level', () => {
+      sandboxSet.stub(maker, 'readSummaryFile')
+      sandboxSet.stub(maker, 'readFilesFromFolder')
+      maker.applySummaryMore(baseFolder, docsFolder, docsSection, undefined)
+
+      expect(maker['summaryFileFolder']).to.equal(path.resolve(baseFolder))
+      expect(maker['summaryFileSectionHeadingLevel']).to.equal(1)
+    })
   })
 
   describe('#readFilesFromFolder', () => {
@@ -119,6 +128,16 @@ describe('#Maker', () => {
     })
 
     it('should read folders recursively', async () => {
+      maker['foldersToExlcude'] = ['empty']
+
+      await maker['readFilesFromFolder'](docsFixturesFolder, executeWhenRead)
+
+      expect(path).to.respondTo('resolve')
+      expect(maker).to.respondTo('statAsync')
+      expect(maker).to.respondTo('readFilesFromFolder')
+    })
+
+    it('should read folders recursively avoiding particular folders', async () => {
       await maker['readFilesFromFolder'](docsFixturesFolder, executeWhenRead)
 
       expect(path).to.respondTo('resolve')

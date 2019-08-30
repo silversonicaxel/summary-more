@@ -36,14 +36,14 @@ $ summary-more --help
 
 Usage: summary-more [options] <option>
 
-  Options:
+Options:
 
-    -v, --version                           output the version number
-    -s, --docsSection [docsSection]         * section title where documentation will be listed in README.md
-    -b, --baseFolder [baseFolder]           base folder where README.md is located
-    -d, --docsFolder [docsFolder]           subfolder of the basefolder where documentation is located
-    -l, --headingLevel [headingLevel]       heading level of the section title within README.md
-    -h, --help                              output usage information
+-v, --version                           output the version number
+-s, --docsSection [docsSection]         * section title where documentation will be listed in README.md
+-b, --baseFolder [baseFolder]           base folder where README.md is located
+-d, --docsFolder [docsFolder]           subfolder of the basefolder where documentation is located
+-l, --headingLevel [headingLevel]       heading level of the section title within README.md
+-h, --help                              output usage information
 
 
 * Mandatory

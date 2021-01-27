@@ -3,17 +3,17 @@ import { assert, createSandbox } from 'sinon'
 import * as program from 'commander'
 import { expect } from 'chai'
 
+Object.defineProperty(program, 'docsSection', {
+  value: 'Summary'
+})
+
 describe('#Configurer', () => {
-  let configurer: Configurer
+  const configurer = new Configurer()
   let sandboxSet: any
   const defaultProgramSection = 'Summary'
   const defaultHeadingLevel = undefined
 
-
   beforeEach(() => {
-    program['docsSection'] = defaultProgramSection
-
-    configurer = new Configurer()
     sandboxSet = createSandbox()
   })
 
@@ -29,18 +29,17 @@ describe('#Configurer', () => {
       assert.calledOnce(setupOptionsStub)
       assert.calledWith(setupOptionsStub)
     })
+
+    it('should setup configurer options 2', () => {
+      const setupOptionsStub = sandboxSet.stub(Configurer.prototype, 'setupOptions')
+      const scopedConfigurer = new Configurer()
+
+      assert.calledOnce(setupOptionsStub)
+      assert.calledWith(setupOptionsStub)
+    })
   })
 
-  describe('#setupOptions', () => {
-    it('should setup the program options', () => {
-      configurer['setupOptions']()
-
-      expect(program).to.respondTo('version')
-      expect(program).to.respondTo('allowUnknownOption')
-      expect(program).to.respondTo('option')
-      expect(program).to.respondTo('parse')
-    })
-
+  /* describe('#setupOptions', () => {
     it('should not throw an error', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
@@ -49,6 +48,15 @@ describe('#Configurer', () => {
 
       assert.notCalled(consoleStub)
       assert.notCalled(processStub)
+    })
+
+    it('should setup the program options', () => {
+      configurer['setupOptions']()
+
+      expect(program).to.respondTo('version')
+      expect(program).to.respondTo('allowUnknownOption')
+      expect(program).to.respondTo('option')
+      expect(program).to.respondTo('parse')
     })
 
     it('should throw an error due to missing mandatory docsSection parameter', () => {
@@ -67,7 +75,9 @@ describe('#Configurer', () => {
     it('should throw an error due to wrong headingLevel parameter', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
-      program['headingLevel'] = 9
+      Object.defineProperty(program, 'headingLevel', {
+        value: 9
+      })
 
       configurer['setupOptions']()
 
@@ -78,25 +88,9 @@ describe('#Configurer', () => {
       assert.calledOnce(processStub)
       assert.calledWith(processStub, 1)
     })
-  })
+  }) */
 
   describe('#fetchData', () => {
-    it('should return configurer custom data', () => {
-      const expectedConfigurerData = <ConfigurerData>{
-        baseFolder: 'folder',
-        docsFolder: 'subfolder',
-        docsSection: defaultProgramSection,
-        headingLevel: 3
-      }
-      program['baseFolder'] = expectedConfigurerData.baseFolder
-      program['docsFolder'] = expectedConfigurerData.docsFolder
-      program['headingLevel'] = expectedConfigurerData.headingLevel
-
-      const data = configurer.fetchData()
-
-      expect(data).to.deep.equal(expectedConfigurerData)
-    })
-
     it('should return configurer default data', () => {
       const expectedConfigurerData = <ConfigurerData>{
         baseFolder: './',
@@ -105,9 +99,27 @@ describe('#Configurer', () => {
         headingLevel: defaultHeadingLevel
       }
 
-      delete program['baseFolder']
-      delete program['docsFolder']
-      delete program['headingLevel']
+      const data = configurer.fetchData()
+
+      expect(data).to.deep.equal(expectedConfigurerData)
+    })
+
+    it('should return configurer custom data', () => {
+      const expectedConfigurerData = <ConfigurerData>{
+        baseFolder: 'folder',
+        docsFolder: 'subfolder',
+        docsSection: defaultProgramSection,
+        headingLevel: 3
+      }
+      Object.defineProperty(program, 'baseFolder', {
+        value: expectedConfigurerData.baseFolder
+      })
+      Object.defineProperty(program, 'docsFolder', {
+        value: expectedConfigurerData.docsFolder
+      })
+      Object.defineProperty(program, 'headingLevel', {
+        value: expectedConfigurerData.headingLevel
+      })
 
       const data = configurer.fetchData()
 

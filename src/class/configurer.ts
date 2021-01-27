@@ -16,6 +16,7 @@ export class Configurer {
     const version = '3.1.4'
 
     program
+      .storeOptionsAsProperties(true)
       .version(version, '-v, --version')
       .allowUnknownOption()
       .option('-b, --baseFolder [baseFolder]', 'Select base folder where README.md is located')
@@ -24,13 +25,15 @@ export class Configurer {
       .option('-l, --headingLevel [headingLevel]', 'Select heading level of the section title within README.md', parseInt)
       .parse(process.argv)
 
-    if (!program.docsSection) {
+    const opts = program.opts()
+
+    if (!opts.docsSection) {
       console.error('-s, --docsSection required')
       process.exit(1)
       return
     }
 
-    if (program.headingLevel && (program.headingLevel < 1 || program.headingLevel > 6)) {
+    if (opts.headingLevel && (opts.headingLevel < 1 || opts.headingLevel > 6)) {
       console.error('-l, --headingLevel is not set correctly, it must be an integer between 1 and 6')
       process.exit(1)
       return
@@ -38,10 +41,12 @@ export class Configurer {
   }
 
   fetchData(): ConfigurerData {
-    const baseFolder = program.baseFolder || './'
-    const docsFolder = program.docsFolder || './'
-    const docsSection = program.docsSection
-    const headingLevel = program.headingLevel
+    const opts = program.opts()
+
+    const baseFolder = opts.baseFolder || './'
+    const docsFolder = opts.docsFolder || './'
+    const docsSection = opts.docsSection
+    const headingLevel = opts.headingLevel
 
     return {
       baseFolder: baseFolder,

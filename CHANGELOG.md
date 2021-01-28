@@ -1,3 +1,24 @@
+## 3.1.3 (May 14, 2020)
+
+### Added
+
+* Upgraded libraries
+
+
+## 3.1.2 (September 9, 2019)
+
+### Added
+
+* Upgraded libraries
+
+
+## 3.1.1 (August 30, 2019)
+
+### Added
+
+* Upgraded libraries
+
+
 ## 3.0.4 (June 7, 2019)
 
 ### Added

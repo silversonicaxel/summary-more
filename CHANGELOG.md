@@ -1,3 +1,14 @@
+## 3.2.0 (January 28, 2021)
+
+### Added
+
+* Upgraded libraries
+
+### Bugfix
+
+* Removed dependencies vulnerability
+
+
 ## 3.1.3 (May 14, 2020)
 
 ### Added

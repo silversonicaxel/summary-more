@@ -13,7 +13,7 @@ export class Configurer {
   }
 
   private setupOptions(): void {
-    const version = '3.2.0'
+    const version = '3.2.1'
 
     program
       .storeOptionsAsProperties(true)

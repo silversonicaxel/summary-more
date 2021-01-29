@@ -1,3 +1,10 @@
+## 3.2.1 (January 29, 2021)
+
+### Bugfix
+
+* Fixed travis configuration
+
+
 ## 3.2.0 (January 28, 2021)
 
 ### Added

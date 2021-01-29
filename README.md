@@ -9,7 +9,7 @@ This is a fast and automatic way to quickly link all the documents inside of a p
 The outcome of this application is visible in the example [README.md](fixtures/README.md).
 
 ## Requirements
-* node 10.0+
+* node 10.12+
 * npm 6.0+
 
 ## Installation

@@ -2,7 +2,7 @@
 summary-more is a tool that serch for all *.md files in your project and summarize them in the README.md
 
 ## Requirements
-* node 10.0+
+* node 10.12+
 * npm 6.0+
 
 ## Example

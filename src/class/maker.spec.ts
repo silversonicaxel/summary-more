@@ -27,7 +27,6 @@ describe('#Maker', () => {
     '* [FILE2 (two)](two/FILE2.md)',
     '* [FI LE2 (two / and more)](two/and&#32;more/FI&#32;LE2.md)'
   ]
-  let executeWhenRead: Function
 
   beforeEach(() => {
     maker = new Maker()
@@ -116,6 +115,8 @@ describe('#Maker', () => {
   })
 
   describe('#readFilesFromFolder', () => {
+    let executeWhenRead: Function
+
     beforeEach(() => {
       executeWhenRead = () => { }
     })

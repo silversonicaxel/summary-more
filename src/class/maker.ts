@@ -177,7 +177,6 @@ export class Maker {
 
   private async handleSummaryContent(readLines: string[], documentLines: string[]): Promise<void> {
     const isExistingSection = readLines.some(this.checkExistingSection)
-    console.log(this.summaryFileSectionHeadingLevel)
     const headingLevel = '#'.repeat(this.summaryFileSectionHeadingLevel)
     if (!isExistingSection) {
       this.existingSectionIndex = readLines.length - 1

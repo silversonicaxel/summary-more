@@ -1,21 +1,24 @@
-import * as program from 'commander'
+import { Command } from 'commander'
 
 export type ConfigurerData = {
   baseFolder: string
   docsFolder: string
   docsSection: string,
-  headingLevel: number | undefined
+  headingLevel: string
 }
 
 export class Configurer {
+  program: Command
+
   constructor() {
+    this.program = new Command();
     this.setupOptions()
   }
 
   private setupOptions(): void {
     const version = '3.2.1'
 
-    program
+    this.program
       .storeOptionsAsProperties(true)
       .version(version, '-v, --version')
       .allowUnknownOption()
@@ -25,7 +28,7 @@ export class Configurer {
       .option('-l, --headingLevel [headingLevel]', 'Select heading level of the section title within README.md', parseInt)
       .parse(process.argv)
 
-    const opts = program.opts()
+    const opts = this.program.opts()
 
     if (!opts.docsSection) {
       console.error('-s, --docsSection required')
@@ -41,7 +44,7 @@ export class Configurer {
   }
 
   fetchData(): ConfigurerData {
-    const opts = program.opts()
+    const opts = this.program.opts()
 
     const baseFolder = opts.baseFolder || './'
     const docsFolder = opts.docsFolder || './'

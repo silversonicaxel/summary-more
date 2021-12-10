@@ -1,3 +1,10 @@
+## 3.3.0 (December 10, 2021)
+
+### Added
+
+* Upgraded libraries
+
+
 ## 3.2.1 (January 29, 2021)
 
 ### Bugfix

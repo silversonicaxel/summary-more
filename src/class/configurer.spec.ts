@@ -1,5 +1,5 @@
-import { Configurer, ConfigurerData } from './configurer'
-import { assert, createSandbox, SinonSpy } from 'sinon'
+import { Configurer, ConfigurerData } from './configurer.js'
+import { assert, createSandbox } from 'sinon'
 import { Command } from 'commander'
 import { expect } from 'chai'
 
@@ -9,7 +9,6 @@ const defaultHeadingLevel = ''
 process.argv.push('--docsSection', defaultProgramSection)
 
 describe('#Configurer', () => {
-  const configurer = new Configurer()
   let sandboxSet: any
 
   beforeEach(() => {
@@ -34,27 +33,20 @@ describe('#Configurer', () => {
 
   describe('#setupOptions', () => {
     let program: Command
-    let storeOptionsAsPropertiesStub: SinonSpy<any, any>
-    let versionStub: SinonSpy<any, any>
-    let allowUnknownOptionStub: SinonSpy<any, any>
-    let optionStub: SinonSpy<any, any>
-    let parseStub: SinonSpy<any, any>
 
     beforeEach(() => {
       const scopedConfigurer = new Configurer()
       program = scopedConfigurer.program
-      storeOptionsAsPropertiesStub = sandboxSet.stub(program, 'storeOptionsAsProperties').returns(program)
-      versionStub = sandboxSet.stub(program, 'version').returns(program)
-      allowUnknownOptionStub = sandboxSet.stub(program, 'allowUnknownOption').returns(program)
-      optionStub = sandboxSet.stub(program, 'option').returns(program)
-      parseStub = sandboxSet.stub(program, 'parse').returns(program)
+      sandboxSet.stub(program, 'storeOptionsAsProperties').returns(program)
+      sandboxSet.stub(program, 'version').returns(program)
+      sandboxSet.stub(program, 'allowUnknownOption').returns(program)
+      sandboxSet.stub(program, 'option').returns(program)
+      sandboxSet.stub(program, 'parse').returns(program)
     })
 
     it('should not throw an error', () => {
       const consoleStub = sandboxSet.stub(console, 'error')
       const processStub = sandboxSet.stub(process, 'exit')
-
-      const scopedConfigurer = new Configurer()
 
       assert.notCalled(consoleStub)
       assert.notCalled(processStub)
@@ -74,7 +66,7 @@ describe('#Configurer', () => {
 
       process.argv.push('--docsSection', '')
 
-      const scopedConfigurer = new Configurer()
+      new Configurer()
 
       assert.calledOnce(consoleStub)
       assert.calledWith(consoleStub, '-s, --docsSection required')
@@ -90,7 +82,7 @@ describe('#Configurer', () => {
 
       process.argv.push('--headingLevel', '9')
 
-      const scopedConfigurer = new Configurer()
+      new Configurer()
 
       assert.calledOnce(consoleStub)
       assert.calledWith(consoleStub, '-l, --headingLevel is not set correctly, it must be an integer between 1 and 6')

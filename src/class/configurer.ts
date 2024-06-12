@@ -11,7 +11,7 @@ export class Configurer {
   program: Command
 
   constructor() {
-    this.program = new Command();
+    this.program = new Command()
     this.setupOptions()
   }
 
@@ -25,7 +25,11 @@ export class Configurer {
       .option('-b, --baseFolder [baseFolder]', 'Select base folder where README.md is located')
       .option('-d, --docsFolder [docsFolder]', 'Select subfolder of the base folder where documentation is located')
       .option('-s, --docsSection [docsSection]', 'Select section where to list documentation in README.md')
-      .option('-l, --headingLevel [headingLevel]', 'Select heading level of the section title within README.md', parseInt)
+      .option(
+        '-l, --headingLevel [headingLevel]',
+        'Select heading level of the section title within README.md',
+        parseInt
+      )
       .parse(process.argv)
 
     const opts = this.program.opts()

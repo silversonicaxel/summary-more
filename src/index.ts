@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { Configurer } from './class/configurer'
-import { Maker } from './class/maker'
+import { Configurer } from './class/configurer.js'
+import { Maker } from './class/maker.js'
 
 const configurer = new Configurer()
 const userConfiguration = configurer.fetchData()

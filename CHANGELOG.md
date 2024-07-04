@@ -1,3 +1,10 @@
+## 3.4.0 (July 4, 2024)
+
+### Added
+
+* Upgraded libraries
+
+
 ## 3.3.0 (December 10, 2021)
 
 ### Added

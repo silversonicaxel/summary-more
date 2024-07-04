@@ -1,3 +1,14 @@
+## 3.5.0 (July 4, 2024)
+
+### Added
+
+* Upgraded libraries
+
+### Removed
+
+* Deleted unnecessary libraries
+
+
 ## 3.4.0 (July 4, 2024)
 
 ### Added

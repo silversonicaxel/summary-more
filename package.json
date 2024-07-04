@@ -1,6 +1,6 @@
 {
   "name": "summary-more",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "summary-more is a tool that search for all *.md files in your project and list them in the README.md file.",
   "license": "MIT",
   "scripts": {
